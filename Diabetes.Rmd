@@ -1,0 +1,62 @@
+#install.packages('mlbench')
+#install.packages('tree')
+#install.packages('party')
+#install.packages('rpart.plot')
+#install.packages('randomForest')
+#install.packages('caret')
+#install.packages('corrplot')
+#install.packages('tidyverse')
+#install.packages('pROC')
+#install.packages('e1071')
+#install.packages('ranger')
+```{r}
+library(mlbench)
+library(tree)
+library(party)
+library(rpart.plot)
+library(randomForest)
+library(caret)
+library(corrplot)
+library(tidyverse)
+library(pROC)
+library(e1071)
+library(ranger)
+```
+```{r}
+data(PimaIndiansDiabetes)
+data <- PimaIndiansDiabetes
+head(data)
+hist(data$insulin)
+```
+```{r}
+data_partition <- createDataPartition(y = data$diabetes, p = 0.78, times = 1, list = FALSE)
+train <- data[data_partition,]
+test <- data[-data_partition,]
+nrow(train)
+```
+```{r}
+summary(data)
+```
+```{r}
+correlation <- cor(train[, setdiff(names(train), 'diabetes')])
+corrplot(corr = correlation, col=c('yellow', 'green yellow', 'orange', 'pink', 'violet', 'purple'), method = 'pie')
+```
+```{r}
+model_tree <- rpart(formula = diabetes ~ ., data = train, method =  'class', maxdepth = 5, minsplit=2, minbucket = 1, cp=0.00)
+rpart.plot(model_tree)
+model_tree
+
+```
+```{r}
+pred_tree <- predict(model_tree, test, type = 'class')
+confusionMatrix(pred_tree, test$diabetes, positive='pos')
+```
+```{r}
+model_rf <- randomForest(diabetes ~., data = train, ntree=55, mtry=3, nodesize=2, maxnodes=24)
+model_rf
+```
+```{r}
+pred_rf <- predict(model_rf, test, type = 'class')
+confusionMatrix(pred_rf, test$diabetes, positive='pos')
+```
+
