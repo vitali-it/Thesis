@@ -1,0 +1,73 @@
+html {
+    border: 20px solid rgb(118, 151, 0);
+    min-height: 100%;
+}
+
+body {
+    display: table;
+    margin: auto;
+    width: 100%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+h1, #buttons, .btnProceed {
+    display: inline-block;
+}
+
+button {
+    padding: 3%;
+    font-size: 2vh;
+}
+
+#buttons {
+    width: 75%;
+}
+
+.btnProceed {
+    background-color: purple;
+    margin: 23%;
+    min-width: 20%;
+}
+
+#btnCancel, #btnSubmit, #btnBack {
+    width: 35%;
+}
+
+#btnCancel {
+    background-color: red;
+}
+
+#btnSubmit, #btnBack {
+    background-color: green;
+}
+
+.lb-ipt {
+    padding: 1%;
+}
+
+#btnSubmit[disabled],
+#btnCancel[disabled] {
+    background-color: grey;
+}
+
+.tooltiphint {
+    visibility: hidden;
+    width: 30%;
+    font-size: 60%;
+    background-color: purple;
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+#btnSubmit[disabled]:hover .tooltiphint {
+    visibility: visible;
+}
+
+#info {
+font-style: italic
+}

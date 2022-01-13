@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data verification</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <script src="./../static/js/vanilla.js"></script>
+</head>
+    <body>
+        <div class="container">
+            <h1 id="titleText"></h1>
+            <h3 id="warning">Внимание! В случае незаполнения необязательных полей, значения будут сгенерированы автоматически, что отразится на точности диагноза.</h3>
+            <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
+                <div class="lb-ipt">
+                    <label>Возраст (полных лет в годах) *</label>
+                    <input type="number" name="age" id="age" step="1" min="0" required>
+                </div>
+                <div class="lb-ipt">
+                    <label>Уровень глюкозы в крови *</label>
+                    <input type="number" name="glucose" id="glucose" step="1" min="0" required>
+                </div>
+                <div class="lb-ipt">
+                    <label>Кровяное давление</label>
+                    <input type="number" name="bloodPressure" id="bloodPressure" step="1" min="0">
+                </div>
+                <div class="lb-ipt">
+                    <label>Толщина складки на трицепсе</label>
+                    <input type="number" name="skinThickness" id="skinThickness" step="1" min="0">
+                </div>
+                <div class="lb-ipt">
+                    <label>Уровень инсулина *</label>
+                    <input type="number" name="insulin" id="insulin" step="1" min="0" required>
+                </div>
+                <div class="lb-ipt">
+                    <label>Функция наследственности диабета</label>
+                    <input type="number" name="diabetesPedigreeFunction" id="diabetesPedigreeFunction" step="0.001" min="0.0" max="2.0">
+                </div>
+                <div class="lb-ipt">
+                    <label>Количество беременностей</label>
+                    <input type="number" name="pregnancies" id="pregnancies" step="1" min="0">
+                </div>
+                <div class="lb-ipt">
+                    <label>Индекс массы тела *</label>
+                    <input type="number" name="bmi" id="bmi" step="0.1" min="0.1" max="100" required>
+                </div>
+                <span id="buttons">
+                    <button id="btnSubmit" disabled type="submit"><span class="tooltiphint">Заполните обязательные поля (*)</span>Проверить</button>
+                    <button id="btnCancel" disabled type="reset">Очистить форму</button>
+                </span>
+            </form>
+            <h3 id="info">* - Обязательное для заполнения поле.</h3>
+            <div id="result">
+                <h3 id="phrase">{{phrase}}</h3>
+                <button id="btnBack" type="submit" onclick="hideRes()">Начать снова</button>
+            </div>
+        </div>
+    </body>
+</html>

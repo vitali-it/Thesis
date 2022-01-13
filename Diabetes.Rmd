@@ -1,26 +1,23 @@
 #install.packages('mlbench')
-#install.packages('tree')
-#install.packages('party')
-#install.packages('rpart.plot')
 #install.packages('randomForest')
+#install.packages('rpart.plot')
 #install.packages('caret')
+#install.packages('summarytools')
 #install.packages('corrplot')
-#install.packages('tidyverse')
-#install.packages('pROC')
-#install.packages('e1071')
-#install.packages('ranger')
+#remove.packages('party')
+#remove.packages('e1071')
+#remove.packages('pROC')
+#remove.packages('tidyverse')
+#remove.packages('ranger')
+#remove.packages('tree')
 ```{r}
-library(mlbench)
-library(tree)
-library(party)
-library(rpart.plot)
-library(randomForest)
-library(caret)
-library(corrplot)
-library(tidyverse)
-library(pROC)
-library(e1071)
-library(ranger)
+suppressMessages(library(mlbench))
+suppressMessages(library(randomForest))
+suppressMessages(library(rpart.plot))
+suppressMessages(library(caret))
+suppressMessages(library(summarytools))
+suppressMessages(library(corrplot))
+
 ```
 ```{r}
 data(PimaIndiansDiabetes)
@@ -29,7 +26,8 @@ head(data)
 hist(data$insulin)
 ```
 ```{r}
-data_partition <- createDataPartition(y = data$diabetes, p = 0.78, times = 1, list = FALSE)
+set.seed(21)
+data_partition <- createDataPartition(y = data$diabetes, p = 0.81, times = 1, list = FALSE)
 train <- data[data_partition,]
 test <- data[-data_partition,]
 nrow(train)
@@ -38,25 +36,35 @@ nrow(train)
 summary(data)
 ```
 ```{r}
+descr(data)
+```
+```{r}
 correlation <- cor(train[, setdiff(names(train), 'diabetes')])
 corrplot(corr = correlation, col=c('yellow', 'green yellow', 'orange', 'pink', 'violet', 'purple'), method = 'pie')
 ```
 ```{r}
-model_tree <- rpart(formula = diabetes ~ ., data = train, method =  'class', maxdepth = 5, minsplit=2, minbucket = 1, cp=0.00)
-rpart.plot(model_tree)
-model_tree
+model_entropy<- rpart(formula = diabetes ~ ., data = train, method = 'class', minsplit=2, control = rpart.control(maxdepth = 5, minbucket = 1, cp=0.0), parms = list(split = 'information'))
+rpart.plot(model_entropy)
+model_entropy
+```
+```{r}
+model_gini<- rpart(formula = diabetes ~ ., data = train, method = 'class', minsplit=2, control = rpart.control(maxdepth = 5, minbucket = 1, cp=0.0), parms = list(split = 'gini'))
+rpart.plot(model_gini)
+model_gini
+```
+```{r}
+pred_entropy <- predict(model_entropy, test, type = 'class')
+confusionMatrix(pred_entropy, test$diabetes, positive='pos')
+```
+```{r}
+pred_gini <- predict(model_gini, test, type = 'class')
+confusionMatrix(pred_gini, test$diabetes, positive='pos')
+```
+```{r}
+model_rf <- randomForest(diabetes ~., data = train, maxnodes=23, ntree=8, mtry = sqrt(8), nodesize = 2)
 
-```
-```{r}
-pred_tree <- predict(model_tree, test, type = 'class')
-confusionMatrix(pred_tree, test$diabetes, positive='pos')
-```
-```{r}
-model_rf <- randomForest(diabetes ~., data = train, ntree=55, mtry=3, nodesize=2, maxnodes=24)
+pred_rpart <- predict(model_rf, test, type = 'class')
+confusionMatrix(pred_rpart, test$diabetes, positive='pos')
 model_rf
-```
-```{r}
-pred_rf <- predict(model_rf, test, type = 'class')
-confusionMatrix(pred_rf, test$diabetes, positive='pos')
 ```
 
