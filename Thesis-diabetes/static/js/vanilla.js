@@ -1,3 +1,5 @@
+const advisory = "The system is advisory in nature. \nIn case of doubt, consult a doctor!"
+
 document.addEventListener('DOMContentLoaded', () => {
     appear();
 });
@@ -16,19 +18,23 @@ window.onload = function() {
 
 function appear() {
     if (!document.getElementById('phrase').innerText.includes('%')) {
-        document.getElementById('result').style.visibility = 'hidden';
-        document.getElementById('titleText').innerText = "Заполните форму";
+        showTitleAndHideResult();
     } else {
         document.getElementById('form').style.visibility = 'hidden';
         document.getElementById('warning').style.visibility = 'hidden';
-        document.getElementById('info').innerText = "Система носит конcультационный характер. \nВ случае возникновения сомнений, обратитесь к врачу!";
-        document.getElementById('titleText').innerText = "Результаты";
+        document.getElementById('info').innerText = advisory;
+        document.getElementById('titleText').innerText = "Results";
     }
 };
 
 function hideRes() {
         document.getElementById('form').style.visibility = 'visible';
         document.getElementById('warning').style.visibility = 'visible';
-        document.getElementById('result').style.visibility = 'hidden';
-        document.getElementById('titleText').innerText = "Заполните форму";
+        showTitleAndHideResult();
+
 };
+
+function showTitleAndHideResult() {
+        document.getElementById('result').style.visibility = 'hidden';
+        document.getElementById('titleText').innerText = "Fill out the form";
+}

@@ -9,49 +9,49 @@
     <body>
         <div class="container">
             <h1 id="titleText"></h1>
-            <h3 id="warning">Внимание! В случае незаполнения необязательных полей, значения будут сгенерированы автоматически, что отразится на точности диагноза.</h3>
+            <h3 id="warning">Attention! If the optional fields are not filled in, the values will be generated automatically, which will affect the accuracy of the diagnosis.</h3>
             <form id="form" action="/upload" method="POST" enctype="multipart/form-data">
                 <div class="lb-ipt">
-                    <label>Возраст (полных лет в годах) *</label>
+                    <label>Age (full years) *</label>
                     <input type="number" name="age" id="age" step="1" min="0" required>
                 </div>
                 <div class="lb-ipt">
-                    <label>Уровень глюкозы в крови *</label>
+                    <label>Blood glucose level *</label>
                     <input type="number" name="glucose" id="glucose" step="1" min="0" required>
                 </div>
                 <div class="lb-ipt">
-                    <label>Кровяное давление</label>
+                    <label>Blood pressure</label>
                     <input type="number" name="bloodPressure" id="bloodPressure" step="1" min="0">
                 </div>
                 <div class="lb-ipt">
-                    <label>Толщина складки на трицепсе</label>
+                    <label>Triceps skinfold thickness</label>
                     <input type="number" name="skinThickness" id="skinThickness" step="1" min="0">
                 </div>
                 <div class="lb-ipt">
-                    <label>Уровень инсулина *</label>
+                    <label>Insulin level *</label>
                     <input type="number" name="insulin" id="insulin" step="1" min="0" required>
                 </div>
                 <div class="lb-ipt">
-                    <label>Функция наследственности диабета</label>
+                    <label>Diabetes pedigree function</label>
                     <input type="number" name="diabetesPedigreeFunction" id="diabetesPedigreeFunction" step="0.001" min="0.0" max="2.0">
                 </div>
                 <div class="lb-ipt">
-                    <label>Количество беременностей</label>
+                    <label>Number of pregnancies</label>
                     <input type="number" name="pregnancies" id="pregnancies" step="1" min="0">
                 </div>
                 <div class="lb-ipt">
-                    <label>Индекс массы тела *</label>
+                    <label>Body mass index *</label>
                     <input type="number" name="bmi" id="bmi" step="0.1" min="0.1" max="100" required>
                 </div>
                 <span id="buttons">
-                    <button id="btnSubmit" disabled type="submit"><span class="tooltiphint">Заполните обязательные поля (*)</span>Проверить</button>
-                    <button id="btnCancel" disabled type="reset">Очистить форму</button>
+                    <button id="btnSubmit" disabled type="submit"><span class="tooltiphint">Fill in the required fields (*)</span>Verify</button>
+                    <button id="btnCancel" disabled type="reset">Clear form</button>
                 </span>
             </form>
-            <h3 id="info">* - Обязательное для заполнения поле.</h3>
+            <h3 id="info">* - Mandatory field.</h3>
             <div id="result">
                 <h3 id="phrase">{{phrase}}</h3>
-                <button id="btnBack" type="submit" onclick="hideRes()">Начать снова</button>
+                <button id="btnBack" type="submit" onclick="hideRes()">Try again</button>
             </div>
         </div>
     </body>

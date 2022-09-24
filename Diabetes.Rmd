@@ -4,12 +4,6 @@
 #install.packages('caret')
 #install.packages('summarytools')
 #install.packages('corrplot')
-#remove.packages('party')
-#remove.packages('e1071')
-#remove.packages('pROC')
-#remove.packages('tidyverse')
-#remove.packages('ranger')
-#remove.packages('tree')
 ```{r}
 suppressMessages(library(mlbench))
 suppressMessages(library(randomForest))
@@ -17,7 +11,6 @@ suppressMessages(library(rpart.plot))
 suppressMessages(library(caret))
 suppressMessages(library(summarytools))
 suppressMessages(library(corrplot))
-
 ```
 ```{r}
 data(PimaIndiansDiabetes)
@@ -62,9 +55,10 @@ confusionMatrix(pred_gini, test$diabetes, positive='pos')
 ```
 ```{r}
 model_rf <- randomForest(diabetes ~., data = train, maxnodes=23, ntree=8, mtry = sqrt(8), nodesize = 2)
-
 pred_rpart <- predict(model_rf, test, type = 'class')
 confusionMatrix(pred_rpart, test$diabetes, positive='pos')
 model_rf
+cat('The importance of values for splitting')
+model_rf$importance
+varImpPlot(model_rf)
 ```
-
